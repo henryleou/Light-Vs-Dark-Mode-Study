@@ -75,8 +75,27 @@
 
     function submitForm() {
       const duration = (new Date() - startTime) / 1000;
-      alert("Thank you for participating!\n\nMode: " + mode + "\nReading time: " + duration.toFixed(2) + " seconds");
-      // TODO: Replace with actual data submission logic
+      const data = {
+        mode: mode,
+        time: duration.toFixed(2),
+        q1: document.querySelectorAll('textarea')[0].value,
+        q2: document.querySelectorAll('textarea')[1].value,
+        q3: document.querySelectorAll('textarea')[2].value,
+        ease: document.querySelectorAll('input[type=number]')[0].value,
+        comfort: document.querySelectorAll('input[type=number]')[1].value,
+        strain: document.querySelectorAll('input[type=number]')[2].value,
+        preference: document.querySelectorAll('input[type=number]')[3].value,
+        comments: document.querySelectorAll('textarea')[3].value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbwZngE23xmHXi7w8V2wcDRUV2IkXk1hM9HXIR83yzc5A4AyapVMz06YPU3D5RaUdzzJ/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        contentType: "application/json"
+      }).then(res => {
+        alert("Submitted! Thanks!\nMode: " + mode + "\nTime: " + data.time + " seconds");
+        location.reload();
+      });
     }
   </script>
 </body>
