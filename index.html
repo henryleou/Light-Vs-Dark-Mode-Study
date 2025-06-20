@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading Comprehension Experiment</title>
+  <style>
+    body.light { background: #ffffff; color: #000000; }
+    body.dark { background: #121212; color: #ffffff; }
+    .container { max-width: 700px; margin: auto; padding: 2em; font-family: sans-serif; }
+    .hidden { display: none; }
+    textarea { width: 100%; height: 4em; }
+    button { margin-top: 1em; padding: 0.5em 1em; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reading Study (Georgia Tech)</h1>
+    <div id="consent">
+      <p>You will read a short passage in either dark or light mode and answer comprehension and comfort questions. Anonymous. Takes ~5 min.</p>
+      <label><input type="checkbox" id="agree"> I consent to participate.</label><br>
+      <button onclick="startStudy()">Begin</button>
+    </div>
+
+    <div id="reading" class="hidden">
+      <h2>Reading Passage</h2>
+      <p id="passage"></p>
+      <button onclick="showQuiz()">I'm done reading</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+      <h2>Comprehension Questions</h2>
+      <ol>
+        <li>What was the main idea of the passage?<br><textarea></textarea></li>
+        <li>Who or what was most affected in the reading?<br><textarea></textarea></li>
+        <li>What detail supported the author's main argument?<br><textarea></textarea></li>
+      </ol>
+      <h2>Comfort Survey (1-5)</h2>
+      <ol>
+        <li>Reading was easy: <input type="number" min="1" max="5"></li>
+        <li>I felt comfortable: <input type="number" min="1" max="5"></li>
+        <li>I experienced eye strain: <input type="number" min="1" max="5"></li>
+        <li>I liked this mode: <input type="number" min="1" max="5"></li>
+      </ol>
+      <p>Additional comments:<br><textarea></textarea></p>
+      <button onclick="submitForm()">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    const passages = {
+      light: `In recent years, the popularity of dark mode interfaces has grown dramatically...`,
+      dark: `Dark mode displays, which show light text on a dark background, have been adopted...`
+    };
+
+    let mode = Math.random() < 0.5 ? 'light' : 'dark';
+    let startTime;
+
+    function startStudy() {
+      if (!document.getElementById('agree').checked) {
+        alert("You must consent to proceed.");
+        return;
+      }
+      document.body.className = mode;
+      document.getElementById('consent').classList.add('hidden');
+      document.getElementById('reading').classList.remove('hidden');
+      document.getElementById('passage').innerText = passages[mode];
+      startTime = new Date();
+    }
+
+    function showQuiz() {
+      document.getElementById('reading').classList.add('hidden');
+      document.getElementById('quiz').classList.remove('hidden');
+    }
+
+    function submitForm() {
+      const duration = (new Date() - startTime) / 1000;
+      alert("Thank you for participating!\n\nMode: " + mode + "\nReading time: " + duration.toFixed(2) + " seconds");
+      // TODO: Replace with actual data submission logic
+    }
+  </script>
+</body>
+</html>
