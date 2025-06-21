@@ -91,12 +91,17 @@
 
       fetch("https://script.google.com/macros/s/AKfycbwZngE23xmHXi7w8V2wcDRUV2IkXk1hM9HXIR83yzc5A4AyapVMz06YPU3D5RaUdzzJ/exec", {
         method: "POST",
-        body: JSON.stringify(data),
-        contentType: "application/json"
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       }).then(res => {
-        window.location.href = "thankyou.html";
+        if (res.ok) {
+          window.location.href = "thankyou.html";
+        } else {
+          alert("Submission failed. Please try again later.");
+        }
       }).catch(err => {
         alert("Error submitting form. Please try again.");
+        console.error(err);
       });
     }
   </script>
