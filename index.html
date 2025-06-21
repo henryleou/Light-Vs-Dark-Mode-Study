@@ -75,6 +75,8 @@
     function showQuiz() {
       document.getElementById('reading').classList.add('hidden');
       document.getElementById('quiz').classList.remove('hidden');
+      document.body.classList.remove("light", "dark");
+      document.body.classList.add("grey");
     }
 
     function submitForm() {
