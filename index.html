@@ -64,7 +64,8 @@
       }
 
       mode = Math.random() < 0.5 ? 'light' : 'dark';
-      document.body.className = mode;
+      document.body.classList.remove("grey");
+      document.body.classList.add(mode);
       document.getElementById('consent').classList.add('hidden');
       document.getElementById('reading').classList.remove('hidden');
       document.getElementById('passage').innerText = passages[mode];
