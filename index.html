@@ -54,6 +54,7 @@
     };
 
     let mode = Math.random() < 0.5 ? 'light' : 'dark';
+    document.body.className = mode;
     let startTime;
 
     function startStudy() {
@@ -93,8 +94,9 @@
         body: JSON.stringify(data),
         contentType: "application/json"
       }).then(res => {
-        alert("Submitted! Thanks!\nMode: " + mode + "\nTime: " + data.time + " seconds");
-        location.reload();
+        window.location.href = "thankyou.html";
+      }).catch(err => {
+        alert("Error submitting form. Please try again.");
       });
     }
   </script>
